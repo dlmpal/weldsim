@@ -1,0 +1,8 @@
+.vscode/
+build/
+tmp_build_dir/
+bin/
+run/
+main3d.gnu.MPI.ex
+post.py
+run.sh

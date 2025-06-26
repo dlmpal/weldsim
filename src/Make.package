@@ -1,0 +1,10 @@
+CEXE_sources += params.cpp
+CEXE_sources += material_properties.cpp
+CEXE_sources += heat_source.cpp
+CEXE_sources += bc.cpp
+CEXE_sources += advance_implicit.cpp
+CEXE_sources += advance_explicit.cpp
+CEXE_sources += single_level.cpp
+CEXE_sources += thermal_solver.cpp
+CEXE_sources += level_build.cpp
+CEXE_sources += main.cpp
