@@ -1,6 +1,6 @@
 # Thermal Simulation of Arc Welding with AMR
 
-![Alt text](images/visit0002.png)
+![Alt text](images/weldsim.png)
 
 WELDSIM is an AMReX-based program for simulating heat-transfer during arc-welding in plates. It uses the finite-volume method combined with adaptive mesh refinement to solve a transient, nonlinear heat equation that models the transfer of thermal energy from the welding electrode to the plate specimen.
 
