@@ -1,5 +1,5 @@
 #=============================================================================
-target_sources(weldsim_${spacedim}d PRIVATE 
+target_sources(weldsim_${SPACEDIM}d PRIVATE 
                ${CMAKE_CURRENT_SOURCE_DIR}/params.cpp
                ${CMAKE_CURRENT_SOURCE_DIR}/material_properties.cpp
                ${CMAKE_CURRENT_SOURCE_DIR}/heat_source.cpp
