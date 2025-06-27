@@ -19,7 +19,7 @@ src_packages := $(foreach dir, $(src_dirs), $(dir)/Make.package)
 include $(src_packages)
 
 # AMReX home directory
-AMREX_HOME = ../../../amrex
+AMREX_HOME ?= ../amrex
 
 # Other AMReX directories
 amrex_dirs 	:= Base Boundary LinearSolvers/MLMG AmrCore Amr
