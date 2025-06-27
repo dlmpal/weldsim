@@ -1,0 +1,51 @@
+amr.n_cell = 32 32 4
+amr.blocking_factor_z = 4
+amr.max_level = 2
+amr.plot_int = 1
+amr.plot_file = run/output/plt
+amr.verbose = 0
+amr.threshold = 900
+amr.enabled=1
+
+solver_type = implicit
+coarse_dt = 0.1
+
+points_file = run/output/points.dat
+n_points = 3
+point_1 = 0.02 0.025 0.0
+point_2 = 0.02 0.025 0.0015
+point_3 = 0.02 0.025 0.0029
+#point_4 = 0.02 0.03 0.0029
+#point_5 = 0.02 0.04 0.0029
+
+# Geometry
+geometry.prob_lo = 0.0 0.0 0.0
+geometry.prob_hi = 0.04 0.05 0.003
+
+# Boundary conditions 
+# Adiabatic = 2
+# Convection + radiation = 3
+bc.lo = 3 3 3
+bc.hi = 3 3 3
+
+# Heat transfer configuration
+ht.ambient_temp = 25
+ht.initial_temp = 25
+ht.heat_transfer_coefficient = 30
+ht.emissivity = 1
+
+# Welding configuration
+weld.cooling_time = 500
+weld.velocity = 0.0033
+weld.power = 990
+weld.center_y = 0.025
+weld.center_z = 0.0
+weld.sigma = 2e-3
+
+# MLMG configuration
+mlmg.n_iter_max = 100
+mlmg.n_fmg_iter_max = 0
+mlmg.verbose = 0
+mlmg.bottom_verbose = 0
+mlmg.abs_tol = 1e-6
+mlmg.rel_tol = 0
