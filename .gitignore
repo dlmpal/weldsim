@@ -2,7 +2,6 @@
 build/
 tmp_build_dir/
 bin/
-run/
 main2d.gnu.ex
 main2d.gnu.MPI.ex
 main3d.gnu.ex

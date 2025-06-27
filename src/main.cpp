@@ -16,6 +16,8 @@ int main(int argc, char *argv[])
         parser.get("max_level", max_level);
         std::string plot_file;
         parser.get("plot_file", plot_file);
+        bool plot_files_output;
+        parser.get("plot_files_output", plot_files_output);
 
         // Single-level solver
         if (max_level == 0)
@@ -34,22 +36,32 @@ int main(int argc, char *argv[])
             Real time_stop = ThermalSolverLevel::params.time_stop;
             amr.init(time_start, time_stop);
 
+            //
             std::ofstream visit_file;
-            if (ParallelDescriptor::IOProcessor())
+            if (plot_files_output)
             {
-                std::filesystem::create_directories(std::filesystem::path(plot_file).parent_path());
-                visit_file.open(std::filesystem::path(plot_file).parent_path() / "plt.visit");
+                if (ParallelDescriptor::IOProcessor())
+                {
+                    std::filesystem::create_directories(std::filesystem::path(plot_file).parent_path());
+                    visit_file.open(std::filesystem::path(plot_file).parent_path() / "plt.visit");
+                }
             }
 
             int step = 0;
             while (amr.okToContinue() and amr.cumTime() < time_stop)
             {
                 amr.coarseTimeStep(time_stop);
-                amr.writePlotFile();
-                if (ParallelDescriptor::IOProcessor())
+
+                if (plot_files_output)
                 {
-                    visit_file << Concatenate("plt", step + 1) + "/Header\n";
+                    Print() << "PlotFile" << "\n";
+                    amr.writePlotFile();
+                    if (ParallelDescriptor::IOProcessor())
+                    {
+                        visit_file << Concatenate("plt", step + 1) + "/Header\n";
+                    }
                 }
+
                 step++;
             }
         }

@@ -19,6 +19,7 @@ namespace amrex::weldsim
             ParmParse parser("amr");
             parser.get("n_cell", n_cells);
             parser.get("verbose", verbose);
+            parser.get("plot_files_output", plot_files_output);
             parser.get("plot_file", plot_file);
             parser.get("plot_int", plot_int);
         }
@@ -60,11 +61,19 @@ namespace amrex::weldsim
         std::ofstream visit_file, points_file;
         if (ParallelDescriptor::IOProcessor())
         {
+            // Create the VisIt "movie" file
+            if (plot_files_output)
+            {
+                std::filesystem::create_directories(std::filesystem::path(plot_file).parent_path());
+                visit_file.open(std::filesystem::path(plot_file).parent_path() / "plt.visit");
+            }
+
             // Create the points file
-            visit_file.open(std::filesystem::path(plot_file).parent_path() / "plt.visit");
             if (params.points.size() > 0)
             {
-                points_file.open(params.points_file);
+                std::filesystem::path points_path(params.points_file);
+                std::filesystem::create_directories(points_path.parent_path());
+                points_file.open(points_path);
                 points_file << "Time,";
                 for (std::size_t i = 0; i < params.points.size() - 1; i++)
                 {
@@ -104,11 +113,14 @@ namespace amrex::weldsim
                 }
 
                 // Create a plotfile of the current state
-                const std::string &filename = Concatenate(plot_file, step, 5);
-                WriteSingleLevelPlotfile(filename, T_new, {"T"}, gm, time, step);
-                if (ParallelDescriptor::IOProcessor())
+                if (plot_files_output)
                 {
-                    visit_file << std::filesystem::path(filename).filename().string() << "/Header\n";
+                    const std::string &filename = Concatenate(plot_file, step, 5);
+                    WriteSingleLevelPlotfile(filename, T_new, {"T"}, gm, time, step);
+                    if (ParallelDescriptor::IOProcessor())
+                    {
+                        visit_file << std::filesystem::path(filename).filename().string() << "/Header\n";
+                    }
                 }
 
                 // Update points file

@@ -1,22 +1,22 @@
 amr.n_cell = 32 32 4
 amr.blocking_factor_z = 4
-amr.max_level = 2
-amr.plot_int = 1
+amr.max_level = 0
+amr.plot_files_output = false
 amr.plot_file = run/output/plt
-amr.verbose = 0
+amr.plot_int = 1
+amr.verbose = 1
 amr.threshold = 900
-amr.enabled=1
 
 solver_type = implicit
 coarse_dt = 0.1
 
 points_file = run/output/points.dat
-n_points = 3
+n_points = 5
 point_1 = 0.02 0.025 0.0
 point_2 = 0.02 0.025 0.0015
 point_3 = 0.02 0.025 0.0029
-#point_4 = 0.02 0.03 0.0029
-#point_5 = 0.02 0.04 0.0029
+point_4 = 0.02 0.03 0.0029
+point_5 = 0.02 0.04 0.0029
 
 # Geometry
 geometry.prob_lo = 0.0 0.0 0.0

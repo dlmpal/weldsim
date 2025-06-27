@@ -19,6 +19,9 @@ namespace amrex::weldsim
         /// @brief Verbosity
         int verbose;
 
+        /// @brief Whether plot files are created
+        bool plot_files_output;
+
         /// @brief Root plot file name
         std::string plot_file;
 
@@ -31,7 +34,7 @@ namespace amrex::weldsim
         /// @brief Old timestep values
         MultiFab T_old;
 
-        /// @brief New timestep values 
+        /// @brief New timestep values
         MultiFab T_new;
 
         /// @brief Geometry
