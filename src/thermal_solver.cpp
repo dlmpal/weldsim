@@ -46,8 +46,11 @@ namespace amrex::weldsim
                 if (params.points.size() > 0)
                 {
                     std::filesystem::path path(params.points_file);
-                    std::filesystem::create_directories(path.parent_path());
-                    points_file.open(params.points_file);
+                    if (not path.parent_path().empty())
+                    {
+                        std::filesystem::create_directories(path.parent_path());
+                    }
+                    points_file.open(path);
                     points_file << "Time,";
                     for (std::size_t i = 0; i < params.points.size() - 1; i++)
                     {

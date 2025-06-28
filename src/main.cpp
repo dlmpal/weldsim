@@ -30,20 +30,24 @@ int main(int argc, char *argv[])
         // Multi-level solver
         else
         {
-            Print() << "Running multi-level solver...\n";
+            Print() << "Running multi-level solver (max_level=" << max_level << ")\n";
             Amr amr(get_level_build());
             Real time_start = ThermalSolverLevel::params.time_start;
             Real time_stop = ThermalSolverLevel::params.time_stop;
             amr.init(time_start, time_stop);
 
-            //
+            // Create the VisIt "movie" file
             std::ofstream visit_file;
             if (plot_files_output)
             {
                 if (ParallelDescriptor::IOProcessor())
                 {
-                    std::filesystem::create_directories(std::filesystem::path(plot_file).parent_path());
-                    visit_file.open(std::filesystem::path(plot_file).parent_path() / "plt.visit");
+                    std::filesystem::path path(plot_file);
+                    if (not path.parent_path().empty())
+                    {
+                        std::filesystem::create_directories(path.parent_path());
+                    }
+                    visit_file.open(path.parent_path() / "plt.visit");
                 }
             }
 
@@ -54,11 +58,10 @@ int main(int argc, char *argv[])
 
                 if (plot_files_output)
                 {
-                    Print() << "PlotFile" << "\n";
                     amr.writePlotFile();
                     if (ParallelDescriptor::IOProcessor())
                     {
-                        visit_file << Concatenate("plt", step + 1) + "/Header\n";
+                        visit_file << Concatenate(std::filesystem::path(plot_file).filename().string(), step + 1) + "/Header\n";
                     }
                 }
 

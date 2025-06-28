@@ -64,16 +64,23 @@ namespace amrex::weldsim
             // Create the VisIt "movie" file
             if (plot_files_output)
             {
-                std::filesystem::create_directories(std::filesystem::path(plot_file).parent_path());
-                visit_file.open(std::filesystem::path(plot_file).parent_path() / "plt.visit");
+                std::filesystem::path path(plot_file);
+                if (not path.parent_path().empty())
+                {
+                    std::filesystem::create_directories(std::filesystem::path(plot_file).parent_path());
+                }
+                visit_file.open(path.parent_path() / "plt.visit");
             }
 
             // Create the points file
             if (params.points.size() > 0)
             {
-                std::filesystem::path points_path(params.points_file);
-                std::filesystem::create_directories(points_path.parent_path());
-                points_file.open(points_path);
+                std::filesystem::path path(params.points_file);
+                if (not path.parent_path().empty())
+                {
+                    std::filesystem::create_directories(path.parent_path());
+                }
+                points_file.open(path);
                 points_file << "Time,";
                 for (std::size_t i = 0; i < params.points.size() - 1; i++)
                 {
